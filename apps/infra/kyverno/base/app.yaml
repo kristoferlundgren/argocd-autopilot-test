@@ -10,7 +10,7 @@ spec:
     server: https://kubernetes.default.svc
   source:
     repoURL: https://kyverno.github.io/kyverno/
-    targetRevision: 'v1.14.4'
+    targetRevision: '3.4.4' # = v1.14.4
     chart: kyverno
   sources: []
   project: infra
