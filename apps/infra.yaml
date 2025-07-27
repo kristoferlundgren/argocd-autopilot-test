@@ -16,3 +16,4 @@ spec:
     automated: null
     syncOptions:
       - ServerSideApply=true
+      - CreateNamespace=true
