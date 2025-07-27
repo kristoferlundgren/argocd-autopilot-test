@@ -5,7 +5,7 @@ metadata:
   finalizers: []
 spec:
   destination:
-    namespace: kyverno
+    namespace: argocd
     server: https://kubernetes.default.svc
   source:
     repoURL: https://kyverno.github.io/kyverno/
