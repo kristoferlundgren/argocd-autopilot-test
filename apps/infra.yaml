@@ -1,9 +1,53 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: argocd-autopilot-test
+  namespace: argocd
+  labels:
+    argocd.argoproj.io/secret-type: repository
+stringData:
+  url: https://github.com/christianh814/private-bgd
+  password: __git_token__
+  username: not-used
+  project: default
+---
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: infra
+  namespace: argocd
+  # Finalizer that ensures that project is not deleted until it is not referenced by any application
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  description: Project for infrastructure components
+  # Allow manifests to deploy to any namespace in the cluster
+  destinations:
+    - namespace: '*'
+      server: '*'
+  # Allow all cluster-scoped resources to be created.
+  # This is required for applications like Kyverno that manage cluster-wide resources.
+  clusterResourceWhitelist:
+    - group: '*'
+      kind: '*'
+  # Allow all namespaced-scoped resources to be created
+  namespaceResourceWhitelist:
+    - group: '*'
+      kind: '*'
+  # Allow Application resources to be defined in the following namespaces
+  sourceNamespaces:
+    - infra
+  sourceRepos:
+  - '*'
+---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: infra
-  namespace: argocd
-  finalizers: []
+  namespace: infra
+  finalizers:
+    # https://argo-cd.readthedocs.io/en/latest/user-guide/app_deletion/#about-the-deletion-finalizer
+    - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
     namespace: infra
