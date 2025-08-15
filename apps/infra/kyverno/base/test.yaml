@@ -6,7 +6,7 @@ metadata:
     rbac.kyverno.io/aggregate-to-admission-controller: "true"
 rules:
 - apiGroups:
-  - apps
+  - ""
   resources:
   - secrets
   verbs:
