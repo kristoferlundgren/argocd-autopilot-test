@@ -12,6 +12,7 @@ rules:
   verbs:
   - create
   - update
+  - delete
   - view
   - list
   - watch
