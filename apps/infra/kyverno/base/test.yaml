@@ -3,7 +3,7 @@ kind: ClusterRole
 metadata:
   name: kyverno:sync-secrets
   labels:
-    rbac.kyverno.io/aggregate-to-background-controller: "true"
+    rbac.kyverno.io/aggregate-to-admission-controller: "true"
 rules:
 - apiGroups:
   - apps
