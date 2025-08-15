@@ -10,13 +10,12 @@ rules:
   resources:
   - secrets
   verbs:
+  - get
+  - list
+  - watch
   - create
   - update
   - delete
-  - view
-  - list
-  - watch
-  - get
 ---
 apiVersion: kyverno.io/v1
 kind: ClusterPolicy
@@ -27,15 +26,21 @@ metadata:
     policies.kyverno.io/category: Sample
     policies.kyverno.io/subject: Secret
     policies.kyverno.io/minversion: 1.6.0
+    # This annotation can be incremented (e.g., v1.0.1) to force a re-scan of existing resources.
+    generation-trigger: "v1.0.0"
     policies.kyverno.io/description: >-
-      Secrets like registry credentials often need to exist in multiple
-      Namespaces so Pods there have access. Manually duplicating those Secrets
-      is time consuming and error prone. This policy will copy a
-      Secret called `regcred` which exists in the `default` Namespace to
-      new Namespaces when they are created. It will also push updates to
-      the copied Secrets should the source Secret be changed.
+      Secrets, such as image pull secrets, often need to exist in multiple
+      Namespaces. Manually duplicating these Secrets is time-consuming and
+      error-prone. This policy copies a Secret named `cgi-acr-pull` from the
+      `default` Namespace to new and existing Namespaces. It also synchronizes
+      updates to the copied Secrets if the source Secret changes. It excludes
+      certain system-level Namespaces.
 spec:
+  # This flag tells Kyverno to apply the rule to existing Namespaces, not just new ones.
   mutateExistingOnPolicyUpdate: true
+  # This ensures the rule is processed by the background controller, which is necessary
+  # for it to apply to existing resources. This is the default behavior.
+  background: true
   rules:
   - name: sync-image-pull-secret
     match:
@@ -43,11 +48,23 @@ spec:
       - resources:
           kinds:
           - Namespace
+          # It's good practice to exclude system namespaces and the source namespace.
+          selector:
+            matchExpressions:
+              - key: kubernetes.io/metadata.name
+                operator: NotIn
+                values:
+                - kube-system
+                - kube-public
+                - kube-node-lease
+                - kyverno
+                - default
     generate:
       apiVersion: v1
       kind: Secret
       name: cgi-acr-pull
       namespace: "{{request.object.metadata.name}}"
+      # This ensures that if the source secret is updated, all cloned secrets are updated too.
       synchronize: true
       clone:
         namespace: default
