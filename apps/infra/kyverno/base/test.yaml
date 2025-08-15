@@ -51,3 +51,11 @@ spec:
       clone:
         namespace: default
         name: mysecret
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mysecret
+  namespace: default
+stringData:
+  mydata: test
