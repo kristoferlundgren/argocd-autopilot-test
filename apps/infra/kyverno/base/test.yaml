@@ -13,10 +13,6 @@ rules:
   - create
   - update
   - delete
-  - view
-  - list
-  - watch
-  - get
 ---
 apiVersion: kyverno.io/v1
 kind: ClusterPolicy
@@ -45,17 +41,17 @@ spec:
     generate:
       apiVersion: v1
       kind: Secret
-      name: mysecret
+      name: imagePullSecret
       namespace: "{{request.object.metadata.name}}"
       synchronize: true
       clone:
         namespace: default
-        name: mysecret
+        name: imagePullSecret
 ---
 apiVersion: v1
 kind: Secret
 metadata:
-  name: mysecret
+  name: imagePullSecret
   namespace: default
 stringData:
   mydata: test
