@@ -15,6 +15,7 @@ rules:
   - view
   - list
   - watch
+  - get
 ---
 apiVersion: kyverno.io/v1
 kind: ClusterPolicy
