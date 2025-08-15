@@ -41,17 +41,17 @@ spec:
     generate:
       apiVersion: v1
       kind: Secret
-      name: imagePullSecret
+      name: cgi-acr-pull
       namespace: "{{request.object.metadata.name}}"
       synchronize: true
       clone:
         namespace: default
-        name: imagePullSecret
+        name: cgi-acr-pull
 ---
 apiVersion: v1
 kind: Secret
 metadata:
-  name: imagePullSecret
+  name: cgi-acr-pull
   namespace: default
 stringData:
   mydata: test
