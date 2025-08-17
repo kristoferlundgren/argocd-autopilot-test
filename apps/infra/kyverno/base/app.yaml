@@ -14,6 +14,20 @@ spec:
     chart: kyverno
     helm:
       releaseName: kyverno
+      parameters:
+        # https://kyverno.io/docs/installation/methods/#high-availability-installation
+        - name: admissionController.replicas
+          value: "3"
+          type: integer
+        - name: backgroundController.replicas
+          value: "3"
+          type: integer
+        - name: cleanupController.replicas
+          value: "3"
+          type: integer
+        - name: reportsController.replicas
+          value: "3"
+          type: integer
   sources: []
   project: infra
   syncPolicy:
