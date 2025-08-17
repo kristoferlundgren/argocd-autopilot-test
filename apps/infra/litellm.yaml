@@ -1,0 +1,24 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: infra
+  namespace: infra
+  finalizers:
+    # https://argo-cd.readthedocs.io/en/latest/user-guide/app_deletion/#about-the-deletion-finalizer
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: litellm
+    server: https://kubernetes.default.svc
+  source:
+    path: apps/infra/litellm/overlay
+    repoURL: https://github.com/kristoferlundgren/argocd-autopilot-test.git
+    targetRevision: main
+  sources: []
+  project: infra
+  syncPolicy:
+    automated: null
+    syncOptions:
+      - ServerSideApply=true
+      - CreateNamespace=true
