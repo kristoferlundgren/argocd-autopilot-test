@@ -3,7 +3,9 @@ kind: Application
 metadata:
   name: kyverno
   namespace: infra
-  finalizers: []
+  finalizers:
+    # https://argo-cd.readthedocs.io/en/latest/user-guide/app_deletion/#about-the-deletion-finalizer
+    - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
     namespace: kyverno
@@ -18,16 +20,12 @@ spec:
         # https://kyverno.io/docs/installation/methods/#high-availability-installation
         - name: admissionController.replicas
           value: "3"
-          type: integer
         - name: backgroundController.replicas
           value: "3"
-          type: integer
         - name: cleanupController.replicas
           value: "3"
-          type: integer
         - name: reportsController.replicas
           value: "3"
-          type: integer
   sources: []
   project: infra
   syncPolicy:
