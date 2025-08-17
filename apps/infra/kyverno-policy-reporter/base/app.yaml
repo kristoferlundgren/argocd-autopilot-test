@@ -3,7 +3,9 @@ kind: Application
 metadata:
   name: kyverno-policy-reporter
   namespace: infra
-  finalizers: []
+  finalizers:
+    # https://argo-cd.readthedocs.io/en/latest/user-guide/app_deletion/#about-the-deletion-finalizer
+    - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
     namespace: policy-reporter
@@ -18,10 +20,8 @@ spec:
       parameters:
         - name: ui.enabled
           value: "true"
-          type: boolean
         - name: plugin.kyverno.enabled
           value: "true"
-          type: boolean
   sources: []
   project: infra
   syncPolicy:
