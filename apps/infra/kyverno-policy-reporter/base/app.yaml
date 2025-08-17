@@ -11,9 +11,9 @@ spec:
     namespace: policy-reporter
     server: https://kubernetes.default.svc
   source:
-    repoURL: https://kyverno.github.io/policy-reporter
+    repoURL: https://kyverno.github.io/policy-reporter/
     targetRevision: '3.4.4' # = v1.14.4
-    chart: policy-reporter/policy-reporter
+    chart: policy-reporter
     helm:
       releaseName: policy-reporter
       # https://kyverno.github.io/policy-reporter-docs/getting-started/installation.html#base-ui-kyverno-plugin-installation
