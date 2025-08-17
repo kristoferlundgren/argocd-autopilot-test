@@ -59,7 +59,11 @@ spec:
   sources: []
   project: infra
   syncPolicy:
-    automated: null
+    automated:
+      enabled: false
+      prune: true
+      selfHeal: true
+      allowEmpty: true
     syncOptions:
       - ServerSideApply=true
       - CreateNamespace=true
