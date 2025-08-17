@@ -3,5 +3,5 @@ kind: Kustomization
 
 namespace: argocd
 resources:
-- https://raw.githubusercontent.com/argoproj/argo-cd/v3.0.12/manifests/install.yaml
-- https://github.com/argoproj/argo-cd//examples/k8s-rbac/argocd-server-applications?ref=v3.0.12
+- https://raw.githubusercontent.com/argoproj/argo-cd/v3.1.0/manifests/install.yaml
+- https://github.com/argoproj/argo-cd//examples/k8s-rbac/argocd-server-applications?ref=v3.1.0
