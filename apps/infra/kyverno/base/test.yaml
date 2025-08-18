@@ -45,6 +45,7 @@ spec:
   background: true
   rules:
   - name: sync-image-pull-secret
+    skipBackgroundRequests: false
     match:
       any:
       - resources:
