@@ -23,6 +23,7 @@ kind: ClusterPolicy
 metadata:
   name: sync-secrets
   annotations:
+    argocd.argoproj.io/compare-options: ServerSideDiff=true
     policies.kyverno.io/title: Sync Secrets
     policies.kyverno.io/category: Sample
     policies.kyverno.io/subject: Secret
