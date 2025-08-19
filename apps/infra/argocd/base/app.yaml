@@ -19,7 +19,7 @@ spec:
       releaseName: argocd
       parameters:
         - name: configs.params.application.namespaces
-          value: "*"
+          value: "infra"
         # - name: redis-ha.enabled
         #   value: "true"
         # - name: controller.replicas
