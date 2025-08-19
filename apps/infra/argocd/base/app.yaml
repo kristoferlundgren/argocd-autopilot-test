@@ -17,10 +17,10 @@ spec:
     chart: argo-cd
     helm:
       releaseName: argocd
-#      parameters:
-#        - name: argo-cd.config.params
-#          value: "application.namespaces=*"
-#        # - name: redis-ha.enabled
+      parameters:
+        - name: configs.params.application.namespaces
+          value: "*"
+        # - name: redis-ha.enabled
         #   value: "true"
         # - name: controller.replicas
         #   value: "1"
